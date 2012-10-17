@@ -2,4 +2,4 @@
 potter-evolve
 =============
 
-experimental project
+node-potter + node-evolve. let's see what happen.

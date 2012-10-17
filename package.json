@@ -18,6 +18,7 @@
   "dependencies": {
      "pkginfo"     : "0.2.x",
      "deck"        : "0.0.4",
+     "ragtime"     : "*",
      "potter"      : "*",
      "evolve"      : "*"
   },

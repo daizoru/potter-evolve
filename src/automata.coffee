@@ -25,6 +25,7 @@ exports.getNeighborsFull = getNeighborsFull = (model, p) ->
   neighbors
 
 exports.getNeighbors = getNeighbors = (model, p) ->
+  console.log "getNeighbors: model: #{model}, p: #{inspect p}"
   [x,y,z] = p
 
   # mutable part
@@ -39,9 +40,10 @@ exports.read = read = (model, p) ->
 
 # simple helper function
 exports.write = write = (model, p,values=[]) ->
+  #console.log "model: #{inspect model}"
   material = model.material values: values 
   model.use material
-  log "writing mat: #{material.values} at #{p}"
+  #log "writing mat: #{material.values} at #{p}"
   model.dot p, yes # yes to overwrite, no to skip
 
 # kernel code executed on each point
@@ -52,6 +54,7 @@ exports.kernel = kernel = (model, position, state) ->
   ## PRIVATE STUFF NOT EXPOSED IN THE RULES
   ## BUT IN THE METHODS 
 
+  #console.log "kernel -> model: #{inspect model}"
   # create some contextual objects, used by kernel
   n = getNeighbors model, position
   [x,y,z] = position
@@ -88,11 +91,11 @@ exports.kernel = kernel = (model, position, state) ->
 
     # convert the [-1.0, +1.0] signal to [0.0, 1.0]
     i = (i + 1.0) * 0.5
-    log "A: #{i}"
+    #log "A: #{i}"
     
     # convert from [0.0, 1.0] to an array index
     index = Math.round i*(len - 1)
-    log "B: #{index}"
+    #log "B: #{index}"
 
     array[index]
 
@@ -138,7 +141,7 @@ exports.kernel = kernel = (model, position, state) ->
   # set a value in the current voxel/cell
   getvalue = (i) ->
     i = safe i
-    log "safe i: #{i}"
+    #log "safe i: #{i}"
     fget state.values, i
 
   # check if two values are equals 'within an acceptant value)
@@ -207,6 +210,7 @@ exports.kernel = kernel = (model, position, state) ->
 
     log "state value0: #{state.values[0]} value: #{getvalue(0.8)}"
     #setvalue(1, add(getvalue(1),0.01))
+    0
 
   # </MUTABLE>
 
